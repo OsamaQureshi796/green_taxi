@@ -152,6 +152,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_google_places",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/flutter_google_places-0.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_lints",
       "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/flutter_lints-2.0.1",
       "packageUri": "lib/",
@@ -188,6 +194,12 @@
       "languageVersion": "2.15"
     },
     {
+      "name": "google_api_headers",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/google_api_headers-1.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "google_fonts",
       "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/google_fonts-3.0.1",
       "packageUri": "lib/",
@@ -214,6 +226,12 @@
     {
       "name": "google_maps_flutter_platform_interface",
       "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_platform_interface-2.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "google_maps_webservice",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/google_maps_webservice-0.0.20-nullsafety.5",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -272,6 +290,12 @@
       "languageVersion": "2.16"
     },
     {
+      "name": "json_annotation",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/json_annotation-4.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "lints",
       "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/lints-2.0.0",
       "packageUri": "lib/",
@@ -294,6 +318,42 @@
       "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/meta-1.8.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/package_info_plus-1.4.3+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_linux",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/package_info_plus_linux-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_macos",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/package_info_plus_macos-1.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_platform_interface",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/package_info_plus_platform_interface-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_web",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/package_info_plus_web-1.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "package_info_plus_windows",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/package_info_plus_windows-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "path",
@@ -386,6 +446,12 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "rxdart",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/rxdart-0.26.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///Users/osama/development/flutter3.3/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -476,7 +542,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-09-14T06:46:46.675126Z",
+  "generated": "2022-09-26T06:42:47.768271Z",
   "generator": "pub",
   "generatorVersion": "2.18.0"
 }

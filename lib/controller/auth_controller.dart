@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_taxi/models/user_model/user_model.dart';
 import 'package:green_taxi/views/home.dart';
 import 'package:green_taxi/views/profile_settings.dart';
 import 'package:path/path.dart' as Path;
@@ -66,7 +67,15 @@ class AuthController extends GetxController{
     });
   }
 
+  var isDecided = false;
+
   decideRoute(){
+
+    if(isDecided){
+      return;
+    }
+    isDecided = true;
+    print("called");
     ///step 1- Check user login?
    User? user =  FirebaseAuth.instance.currentUser;
 
@@ -75,9 +84,9 @@ class AuthController extends GetxController{
     FirebaseFirestore.instance.collection('users').doc(user.uid).get()
         .then((value) {
           if(value.exists){
-            Get.to(()=> HomeScreen());
+            Get.offAll(()=> HomeScreen());
           }else{
-            Get.to(()=> ProfileSettingScreen());
+            Get.offAll(()=> ProfileSettingScreen());
           }
     });
 
@@ -85,6 +94,8 @@ class AuthController extends GetxController{
 
 
   }
+
+
 
 
   uploadImage(File image)async{
@@ -106,11 +117,15 @@ class AuthController extends GetxController{
     return imageUrl;
   }
 
-  storeUserInfo(File selectedImage,String name,String home,String business,String shop)async{
-    String url  = await uploadImage(selectedImage);
+  storeUserInfo(File? selectedImage,String name,String home,String business,String shop,{String url = ''})async{
+    String url_new = url;
+    if(selectedImage != null){
+      url_new  = await uploadImage(selectedImage);
+
+    }
     String uid = FirebaseAuth.instance.currentUser!.uid;
     FirebaseFirestore.instance.collection('users').doc(uid).set({
-      'image': url,
+      'image': url_new,
       'name': name,
       'home_address': home,
       'business_address': business,
@@ -123,5 +138,15 @@ class AuthController extends GetxController{
     });
   }
 
+  var myUser = UserModel(
+
+  ).obs;
+
+  getUserInfo(){
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore.instance.collection('users').doc(uid).snapshots().listen((event) {
+      myUser.value = UserModel.fromJson(event.data()!);
+    });
+  }
 
 }

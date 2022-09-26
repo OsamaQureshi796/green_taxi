@@ -31,7 +31,7 @@ Widget greenIntroWidget(){
   );
 }
 
-Widget greenIntroWidgetWithoutLogos(){
+Widget greenIntroWidgetWithoutLogos({String title = "Profile Settings"}){
   return Container(
     width: Get.width,
     decoration: BoxDecoration(
@@ -45,7 +45,7 @@ Widget greenIntroWidgetWithoutLogos(){
         height: Get.height*0.1,
         width: Get.width,
         margin: EdgeInsets.only(bottom: Get.height*0.05),
-        child: Center(child: Text("Profile Settings",style: GoogleFonts.poppins(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),))),
+        child: Center(child: Text(title,style: GoogleFonts.poppins(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),))),
 
   );
 }
