@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:get/get.dart';
@@ -8,8 +10,11 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:green_taxi/views/my_profile.dart';
 
 import '../controller/auth_controller.dart';
+import '../controller/polyline_handler.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_constants.dart';
+import 'package:geocoding/geocoding.dart' as geoCoding;
+import 'dart:ui' as ui;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,6 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AuthController authController = Get.find<AuthController>();
 
+  late LatLng destination;
+  late LatLng source;
+  final Set<Polyline> _polyline={};
+  Set<Marker> markers = Set<Marker>();
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
     rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
     });
+
+    loadCustomMarker();
   }
 
    final CameraPosition _kGooglePlex = CameraPosition(
@@ -57,6 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
             right: 0,
             bottom: 0,
             child: GoogleMap(
+              markers: markers,
+              polylines: polyline,
               zoomControlsEnabled: false,
               onMapCreated: (GoogleMapController controller) {
                 myMapController = controller;
@@ -155,14 +169,15 @@ class _HomeScreenState extends State<HomeScreen> {
       offset: 0,
       radius: 1000,
       strictbounds: false,
-      region: "us",
+      region: "pk",
       language: "en",
       context: context,
       mode: Mode.overlay,
       apiKey: AppConstants.kGoogleApiKey,
-      components: [new Component(Component.country, "us")],
-      types: ["(cities)"],
+      components: [new Component(Component.country, "pk")],
+      types: [],
       hint: "Search City",);
+
 
     return p!.description!;
   }
@@ -197,6 +212,19 @@ class _HomeScreenState extends State<HomeScreen> {
       String selectedPlace =   await showGoogleAutoComplete();
 
           destinationController.text = selectedPlace;
+
+      List<geoCoding.Location> locations = await geoCoding.locationFromAddress(selectedPlace);
+
+          destination = LatLng(locations.first.latitude, locations.first.longitude);
+
+          markers.add(Marker(markerId: MarkerId(selectedPlace),infoWindow: InfoWindow(title: 'Destination: $selectedPlace',),position: destination,icon: BitmapDescriptor.fromBytes(markIcons),));
+
+      myMapController!.animateCamera(
+          CameraUpdate.newCameraPosition(
+              CameraPosition(target: destination, zoom: 14)
+            //17 is new zoom level
+          )
+      );
 
           setState(() {
             showSourceField = true;
@@ -336,6 +364,28 @@ class _HomeScreenState extends State<HomeScreen> {
                       String place = await showGoogleAutoComplete();
                       sourceController.text = place;
 
+                      List<geoCoding.Location> locations = await geoCoding.locationFromAddress(place);
+
+
+                      source = LatLng(locations.first.latitude, locations.first.longitude);
+                      if(markers.length >=2){
+                        markers.remove(markers.last);
+                      }
+                      markers.add(Marker(markerId: MarkerId(place),infoWindow: InfoWindow(title: 'Source: $place',),position: source));
+
+                      await getPolylines(source,destination);
+
+                      // drawPolyline(place);
+
+                      myMapController!.animateCamera(
+                          CameraUpdate.newCameraPosition(
+                              CameraPosition(target: source, zoom: 14)
+
+                          )
+                      );
+                      setState(() {
+
+                      });
                     },
                     child: Container(
                       width: Get.width,
@@ -560,4 +610,48 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+   late Uint8List markIcons;
+  loadCustomMarker() async{
+
+      markIcons = await loadAsset('assets/dest_marker.png', 100);
+      // makers added according to index
+      // _markers.add(
+      //     Marker(
+      //       // given marker id
+      //       markerId: MarkerId(i.toString()),
+      //       // given marker icon
+      //       icon: BitmapDescriptor.fromBytes(markIcons),
+      //       // given position
+      //       position: _latLen[i],
+      //       infoWindow: InfoWindow(
+      //         // given title for marker
+      //         title: 'Location: '+i.toString(),
+      //       ),
+      //     )
+      // );
+      // setState(() {
+      // });
+    }
+
+  Future<Uint8List> loadAsset(String path, int width) async{
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetHeight: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return(await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+
+  }
+
+  void drawPolyline(String placeId) {
+    _polyline.clear();
+    _polyline.add(Polyline(
+      polylineId: PolylineId(placeId),
+      visible: true,
+
+      points: [source,destination],
+      color: AppColors.greenColor,
+      width: 5,
+
+    ));
+  }
+
 }

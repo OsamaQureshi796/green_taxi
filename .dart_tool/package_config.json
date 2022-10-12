@@ -188,6 +188,18 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "geocoding",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/geocoding-2.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "geocoding_platform_interface",
+      "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/geocoding_platform_interface-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "get",
       "rootUri": "file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/get-4.6.5",
       "packageUri": "lib/",
@@ -542,7 +554,7 @@
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-09-26T06:42:47.768271Z",
+  "generated": "2022-10-12T10:58:19.140150Z",
   "generator": "pub",
   "generatorVersion": "2.18.0"
 }

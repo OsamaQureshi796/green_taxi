@@ -8,6 +8,7 @@ firebase_core_web=/Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dart
 firebase_storage=/Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/firebase_storage-10.3.7/
 firebase_storage_web=/Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/firebase_storage_web-3.3.5/
 flutter_plugin_android_lifecycle=/Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-2.0.7/
+geocoding=/Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/geocoding-2.0.5/
 google_api_headers=/Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/google_api_headers-1.3.0/
 google_maps_flutter=/Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-2.2.0/
 google_maps_flutter_android=/Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter_android-2.3.0/

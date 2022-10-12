@@ -114,6 +114,14 @@ flutter_svg
 2.17
 file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/flutter_svg-1.1.4/
 file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/flutter_svg-1.1.4/lib/
+geocoding
+2.12
+file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/geocoding-2.0.5/
+file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/geocoding-2.0.5/lib/
+geocoding_platform_interface
+2.12
+file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/geocoding_platform_interface-2.0.1/
+file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/geocoding_platform_interface-2.0.1/lib/
 get
 2.15
 file:///Users/osama/development/flutter3.3/.pub-cache/hosted/pub.dartlang.org/get-4.6.5/
