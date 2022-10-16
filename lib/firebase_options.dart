@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDrgy_6QicvpcsaveCLNtYIpgPF2yQZW2I',
-    appId: '1:931180730278:android:0c3837c305b90c98c7e167',
-    messagingSenderId: '931180730278',
-    projectId: 'greentaxi-aa1ac',
-    storageBucket: 'greentaxi-aa1ac.appspot.com',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCjfmYrpBLqpe1b9pn5Q0tG2qhEA8GMAa4',
-    appId: '1:931180730278:ios:310ef0af97debb2ac7e167',
-    messagingSenderId: '931180730278',
-    projectId: 'greentaxi-aa1ac',
-    storageBucket: 'greentaxi-aa1ac.appspot.com',
-    iosClientId: '931180730278-n53lpdq04lj7orq0rm8g32bat9mtkrgr.apps.googleusercontent.com',
-    iosBundleId: 'com.dotcoder.greenTaxi',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    storageBucket: '',
+    iosClientId: '',
+    iosBundleId: '',
   );
 }

@@ -1,15 +1,13 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:green_taxi/controller/auth_controller.dart';
 import 'package:green_taxi/utils/app_colors.dart';
-import 'package:green_taxi/views/home.dart';
-import 'package:green_taxi/widgets/green_intro_widget.dart';
+ import 'package:green_taxi/widgets/green_intro_widget.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 
@@ -31,6 +29,9 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
 
+  late LatLng homeAddress;
+  late LatLng businessAddress;
+  late LatLng shoppingAddress;
   getImage(ImageSource source) async {
     final XFile? image = await _picker.pickImage(source: source);
     if (image != null) {
@@ -125,7 +126,18 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
 
                           return null;
 
-                    }),
+                    },onTap: ()async{
+                      Prediction? p = await  authController.showGoogleAutoComplete(context);
+
+                      /// now let's translate this selected address and convert it to latlng obj
+
+                      homeAddress = await authController.buildLatLngFromAddress(p!.description!);
+                      homeController.text = p.description!;
+                      ///store this information into firebase together once update is clicked
+
+
+
+                    },readOnly: true),
                     const SizedBox(
                       height: 10,
                     ),
@@ -136,7 +148,16 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                           }
 
                           return null;
-                        }),
+                        },onTap: ()async{
+                          Prediction? p = await  authController.showGoogleAutoComplete(context);
+
+                          /// now let's translate this selected address and convert it to latlng obj
+
+                          businessAddress = await authController.buildLatLngFromAddress(p!.description!);
+                          businessController.text = p.description!;
+                          ///store this information into firebase together once update is clicked
+
+                        },readOnly: true),
                     const SizedBox(
                       height: 10,
                     ),
@@ -147,7 +168,16 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                           }
 
                           return null;
-                        }),
+                        },onTap: ()async{
+              Prediction? p = await  authController.showGoogleAutoComplete(context);
+
+              /// now let's translate this selected address and convert it to latlng obj
+
+              shoppingAddress = await authController.buildLatLngFromAddress(p!.description!);
+              shopController.text = p.description!;
+              ///store this information into firebase together once update is clicked
+
+              },readOnly: true),
                     const SizedBox(
                       height: 30,
                     ),
@@ -172,7 +202,11 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                                 nameController.text,
                                 homeController.text,
                                 businessController.text,
-                                shopController.text);
+                                shopController.text,
+                                businessLatLng: businessAddress,
+                              homeLatLng: homeAddress,
+                              shoppingLatLng: shoppingAddress
+                              );
                           })),
                   ],
                 ),
@@ -185,7 +219,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   }
 
   TextFieldWidget(
-      String title, IconData iconData, TextEditingController controller,Function validator) {
+      String title, IconData iconData, TextEditingController controller,Function validator,{Function? onTap,bool readOnly = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -212,6 +246,8 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
               ],
               borderRadius: BorderRadius.circular(8)),
           child: TextFormField(
+            readOnly: readOnly,
+            onTap: ()=> onTap!(),
             validator: (input)=> validator(input),
             controller: controller,
             style: GoogleFonts.poppins(

@@ -5,11 +5,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:geocoding/geocoding.dart' as geoCoding;
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:green_taxi/models/user_model/user_model.dart';
 import 'package:green_taxi/views/home.dart';
 import 'package:green_taxi/views/profile_settings.dart';
 import 'package:path/path.dart' as Path;
+
+import '../utils/app_constants.dart';
 class AuthController extends GetxController{
 
   String userUid = '';
@@ -117,7 +123,7 @@ class AuthController extends GetxController{
     return imageUrl;
   }
 
-  storeUserInfo(File? selectedImage,String name,String home,String business,String shop,{String url = ''})async{
+  storeUserInfo(File? selectedImage,String name,String home,String business,String shop,{String url = '',LatLng? homeLatLng,LatLng? businessLatLng,LatLng? shoppingLatLng,})async{
     String url_new = url;
     if(selectedImage != null){
       url_new  = await uploadImage(selectedImage);
@@ -129,7 +135,11 @@ class AuthController extends GetxController{
       'name': name,
       'home_address': home,
       'business_address': business,
-      'shopping_address': shop
+      'shopping_address': shop,
+      'home_latlng': GeoPoint(homeLatLng!.latitude,homeLatLng.longitude),
+      'business_latlng': GeoPoint(businessLatLng!.latitude,businessLatLng.longitude),
+      'shopping_latlng': GeoPoint(shoppingLatLng!.latitude,shoppingLatLng.longitude),
+
     }).then((value) {
 
       isProfileUploading(false);
@@ -148,5 +158,33 @@ class AuthController extends GetxController{
       myUser.value = UserModel.fromJson(event.data()!);
     });
   }
+
+
+  Future<Prediction?> showGoogleAutoComplete(BuildContext context)async{
+
+    Prediction? p = await PlacesAutocomplete.show(
+      offset: 0,
+      radius: 1000,
+      strictbounds: false,
+      region: "pk",
+      language: "en",
+      context: context,
+      mode: Mode.overlay,
+      apiKey: AppConstants.kGoogleApiKey,
+      components: [new Component(Component.country, "pk")],
+      types: [],
+      hint: "Search City",);
+
+
+    return p;
+  }
+
+
+
+ Future<LatLng> buildLatLngFromAddress(String place)async{
+    List<geoCoding.Location> locations = await  geoCoding.locationFromAddress(place);
+    return LatLng(locations.first.latitude,locations.first.longitude);
+  }
+
 
 }

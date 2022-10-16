@@ -6,6 +6,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:green_taxi/controller/auth_controller.dart';
 import 'package:green_taxi/utils/app_colors.dart';
 import 'package:green_taxi/views/home.dart';
@@ -39,7 +41,9 @@ class _MyProfileState extends State<MyProfile> {
     }
   }
 
-
+  late LatLng homeAddress;
+  late LatLng businessAddress;
+  late LatLng shoppingAddress;
   @override
   void initState() {
     // TODO: implement initState
@@ -48,6 +52,11 @@ class _MyProfileState extends State<MyProfile> {
     homeController.text = authController.myUser.value.hAddress??"";
     shopController.text = authController.myUser.value.mallAddress??"";
     businessController.text = authController.myUser.value.bAddress??"";
+
+    homeAddress = authController.myUser.value.homeAddress!;
+    businessAddress = authController.myUser.value.bussinessAddres!;
+    shoppingAddress = authController.myUser.value.shoppingAddress!;
+
   }
 
   @override
@@ -135,7 +144,7 @@ class _MyProfileState extends State<MyProfile> {
 
                       return null;
 
-                    }),
+                    },),
                     const SizedBox(
                       height: 10,
                     ),
@@ -148,7 +157,18 @@ class _MyProfileState extends State<MyProfile> {
 
                       return null;
 
-                    }),
+                    },onTap: ()async{
+                        Prediction? p = await  authController.showGoogleAutoComplete(context);
+
+                        /// now let's translate this selected address and convert it to latlng obj
+
+                        homeAddress = await authController.buildLatLngFromAddress(p!.description!);
+                        homeController.text = p.description!;
+                        ///store this information into firebase together once update is clicked
+
+
+
+                    },readOnly: true),
                     const SizedBox(
                       height: 10,
                     ),
@@ -159,7 +179,16 @@ class _MyProfileState extends State<MyProfile> {
                           }
 
                           return null;
-                        }),
+                        },onTap: ()async{
+                          Prediction? p = await  authController.showGoogleAutoComplete(context);
+
+                          /// now let's translate this selected address and convert it to latlng obj
+
+                          businessAddress = await authController.buildLatLngFromAddress(p!.description!);
+                          businessController.text = p.description!;
+                          ///store this information into firebase together once update is clicked
+
+                        },readOnly: true),
                     const SizedBox(
                       height: 10,
                     ),
@@ -170,7 +199,16 @@ class _MyProfileState extends State<MyProfile> {
                           }
 
                           return null;
-                        }),
+                        },onTap: ()async{
+                          Prediction? p = await  authController.showGoogleAutoComplete(context);
+
+                          /// now let's translate this selected address and convert it to latlng obj
+
+                          shoppingAddress = await authController.buildLatLngFromAddress(p!.description!);
+                          shopController.text = p.description!;
+                          ///store this information into firebase together once update is clicked
+
+                        },readOnly: true),
                     const SizedBox(
                       height: 30,
                     ),
@@ -193,7 +231,11 @@ class _MyProfileState extends State<MyProfile> {
                           homeController.text,
                           businessController.text,
                           shopController.text,
-                      url: authController.myUser.value.image??"");
+                      url: authController.myUser.value.image??"",
+                      homeLatLng: homeAddress,
+                        shoppingLatLng: shoppingAddress,
+                        businessLatLng: businessAddress
+                      );
                     })),
                   ],
                 ),
@@ -206,7 +248,7 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   TextFieldWidget(
-      String title, IconData iconData, TextEditingController controller,Function validator) {
+      String title, IconData iconData, TextEditingController controller,Function validator,{Function? onTap,bool readOnly = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -233,6 +275,8 @@ class _MyProfileState extends State<MyProfile> {
               ],
               borderRadius: BorderRadius.circular(8)),
           child: TextFormField(
+          readOnly: readOnly,
+            onTap: ()=> onTap!(),
             validator: (input)=> validator(input),
             controller: controller,
             style: GoogleFonts.poppins(
