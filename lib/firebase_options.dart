@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: '',
-    appId: '',
-    messagingSenderId: '',
-    projectId: '',
-    storageBucket: '',
+    apiKey: 'YOUR-Details',
+    appId: 'YOUR-Details',
+    messagingSenderId:'YOUR-Details',
+    projectId: 'YOUR-Details',
+    storageBucket: 'YOUR-Details',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: '',
-    appId: '',
-    messagingSenderId: '',
-    projectId: '',
-    storageBucket: '',
-    iosClientId: '',
-    iosBundleId: '',
+    apiKey:'YOUR-Details',
+    appId: 'YOUR-Details',
+    messagingSenderId: 'YOUR-Details',
+    projectId: 'YOUR-Details',
+    storageBucket: 'YOUR-Details',
+    iosClientId: 'YOUR-Details',
+    iosBundleId: 'YOUR-Details',
   );
 }

@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,7 @@ import 'package:geocoding/geocoding.dart' as geoCoding;
 import 'dart:ui' as ui;
 
 import '../widgets/text_widget.dart';
+import 'payment.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -460,14 +462,18 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               children: [
-                buildDrawerItem(title: 'Payment History', onPressed: () {}),
+                buildDrawerItem(title: 'Payment History', onPressed: () => Get.to(()=> PaymentScreen())),
                 buildDrawerItem(
                     title: 'Ride History', onPressed: () {}, isVisible: true),
                 buildDrawerItem(title: 'Invite Friends', onPressed: () {}),
                 buildDrawerItem(title: 'Promo Codes', onPressed: () {}),
                 buildDrawerItem(title: 'Settings', onPressed: () {}),
                 buildDrawerItem(title: 'Support', onPressed: () {}),
-                buildDrawerItem(title: 'Log Out', onPressed: () {}),
+                buildDrawerItem(title: 'Log Out', onPressed: () {
+
+                  FirebaseAuth.instance.signOut();
+
+                }),
               ],
             ),
           ),

@@ -31,7 +31,7 @@ Widget greenIntroWidget(){
   );
 }
 
-Widget greenIntroWidgetWithoutLogos({String title = "Profile Settings"}){
+Widget greenIntroWidgetWithoutLogos({String title = "Profile Settings",String? subtitle}){
   return Container(
     width: Get.width,
     decoration: BoxDecoration(
@@ -45,7 +45,15 @@ Widget greenIntroWidgetWithoutLogos({String title = "Profile Settings"}){
         height: Get.height*0.1,
         width: Get.width,
         margin: EdgeInsets.only(bottom: Get.height*0.05),
-        child: Center(child: Text(title,style: GoogleFonts.poppins(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(title,style: GoogleFonts.poppins(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
+            if(subtitle != null) Text(subtitle,style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.white),),
+
+          ],
+        )),
 
   );
 }

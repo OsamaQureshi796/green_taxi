@@ -58,6 +58,7 @@ class _RoundedWithShadowState extends State<RoundedWithShadow> {
       controller: controller,
       focusNode: focusNode,
       onCompleted: (String input){
+        authController.isDecided = false;
         authController.verifyOtp(input);
       },
       defaultPinTheme: defaultPinTheme.copyWith(
