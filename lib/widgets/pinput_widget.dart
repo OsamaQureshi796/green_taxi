@@ -9,8 +9,6 @@ class RoundedWithShadow extends StatefulWidget {
   @override
   _RoundedWithShadowState createState() => _RoundedWithShadowState();
 
-  @override
-  String toStringShort() => 'Rounded With Shadow';
 }
 
 class _RoundedWithShadowState extends State<RoundedWithShadow> {

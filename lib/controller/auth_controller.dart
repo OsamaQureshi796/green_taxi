@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:green_taxi/models/user_model/user_model.dart';
+import 'package:green_taxi/views/driver/car_registration/car_registration_template.dart';
 import 'package:green_taxi/views/home.dart';
 import 'package:green_taxi/views/profile_settings.dart';
 import 'package:path/path.dart' as Path;
@@ -256,13 +257,24 @@ class AuthController extends GetxController {
     },SetOptions(merge: true)).then((value) {
       isProfileUploading(false);
 
-      if(isLoginAsDriver){
-        print("Login As Driver");
-      }else{
-        Get.to(() => HomeScreen());
-      }
+      Get.off(()=> CarRegistrationTemplate());
+
+
 
     });
+  }
+
+  
+
+  Future<bool> uploadCarEntry(Map<String,dynamic> carData)async{
+     bool isUploaded = false;
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+
+   await FirebaseFirestore.instance.collection('users').doc(uid).set(carData,SetOptions(merge: true));
+
+   isUploaded = true;
+
+    return isUploaded;
   }
 
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_taxi/controller/auth_controller.dart';
+import 'package:green_taxi/views/driver/car_registration/car_registration_template.dart';
 import 'package:green_taxi/views/login_screen.dart';
 
  import '../../widgets/green_intro_widget.dart';
@@ -41,6 +42,8 @@ class DecisionScreen extends StatelessWidget {
                     (){
                       authController.isLoginAsDriver = false;
                    Get.to(()=> LoginScreen());
+
+
 
                     },
                 Get.width*0.8
